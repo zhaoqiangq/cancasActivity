@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>尚标</title>
+    <meta charset="UTF-8">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <meta name="viewport" content="width=device-width">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>images</title>
+    <!-- html2canvas就是这样一款前端插件,它的原理是将Dom节点在Canvas里边画出来 -->
+    <script src="js/html2canvas.min.js"></script>
+    <!-- 将canvas图片保存成图片 -->
+    <script src="js/canvas2image.js"></script>
+    <script src="js/base64.js"></script>
+    <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+<div id="content">
+    <img src="activity_bkg_last-1.png" alt="">
+    <span id="text"></span>
+</div>
+<input type="text" id="input">
+<button id="btnSave">转换成图片</button>
+<div id="images">
+    <img src="" id="imag" alt="">
+</div>
+</body>
+<script>
+    /*生成canvas图形*/
+    // 获取按钮id
+    var btnSave = document.getElementById("btnSave");
+    // 获取内容id
+    var content = document.getElementById("content");
+
+    var image=document.getElementById('imag');
+    var text  = document.getElementById('text');
+    var input  = document.getElementById('input');
+    // 进行canvas生成
+    btnSave.onclick = function(){
+        text.innerHTML = input.value;
+        html2canvas(content, {
+            onrendered: function(canvas) {
+                //添加属性
+                canvas.setAttribute('id','thecanvas');
+                //读取属性值
+                // var value= canvas.getAttribute('id');
+                image.src = canvas.toDataURL("image/png",1)
+                document.getElementById('images').appendChild(canvas);
+                canvas.style.display='none'
+            }
+        });
+    }
+</script>
+
+</html>
