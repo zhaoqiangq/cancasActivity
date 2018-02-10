@@ -5,70 +5,58 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>尚标</title>
-    <meta charset="UTF-8">
-    <!-- 启用360浏览器的极速模式(webkit) -->
-    <meta name="renderer" content="webkit">
-    <!-- 避免IE使用兼容模式 -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
-    <meta name="HandheldFriendly" content="true">
-    <!-- 微软的老式浏览器 -->
-    <meta name="MobileOptimized" content="320">
-    <!-- UC强制全屏 -->
-    <meta name="full-screen" content="yes">
-    <!-- QQ强制全屏 -->
-    <meta name="x5-fullscreen" content="true">
-    <!-- UC应用模式 -->
-    <meta name="browsermode" content="application">
-    <!-- QQ应用模式 -->
-    <meta name="x5-page-mode" content="app">
-    <meta name="viewport" content="width=device-width">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
-    <title>images</title>
-    <!-- html2canvas就是这样一款前端插件,它的原理是将Dom节点在Canvas里边画出来 -->
-    <script src="js/html2canvas.min.js"></script>
-    <!-- 将canvas图片保存成图片 -->
-    <script src="js/canvas2image.js"></script>
-    <script src="js/base64.js"></script>
+    <title>一封受知识产权保护的情书</title>
     <link rel="stylesheet" href="css/base.css">
+    <script src="static/js/jquery.min.js"></script>
 </head>
 <body>
-<div id="content">
-    <img src="activity_bkg_last-1.png" alt="">
-    <span id="text"></span>
+<div class="herder"></div>
+<div class="inputtext">
+    <span>姓名:</span><input type="text" id="input" placeholder="请输入您的姓名">
 </div>
-<input type="text" id="input">
-<button id="btnSave">转换成图片</button>
-<div id="images">
-    <img src="" id="imag" alt="">
+<div class="list">
+    <span>选择:</span>
+    <ul>
+        <li> 给老婆的情书 </li>
+        <li>给老公的情书</li>
+        <li>写给青春的情书</li>
+        <li>受知识产权保护的情书</li>
+    </ul>
 </div>
-</body>
+<button id="btnSave">提交</button>
+<div class="tishi"><span id="tstext"></span></div>
 <script>
-    /*生成canvas图形*/
-    // 获取按钮id
-    var btnSave = document.getElementById("btnSave");
-    // 获取内容id
-    var content = document.getElementById("content");
-
-    var image=document.getElementById('imag');
-    var text  = document.getElementById('text');
-    var input  = document.getElementById('input');
-    // 进行canvas生成
-    btnSave.onclick = function(){
-        text.innerHTML = input.value;
-        html2canvas(content, {
-            onrendered: function(canvas) {
-                //添加属性
-                canvas.setAttribute('id','thecanvas');
-                //读取属性值
-                // var value= canvas.getAttribute('id');
-                image.src = canvas.toDataURL("image/png",1)
-                document.getElementById('images').appendChild(canvas);
-                canvas.style.display='none'
+    $(function () {
+        $('ul li').on('click',function () {
+            $(this).addClass('active').siblings().removeClass('active')
+        })
+       var index ;
+        $('#btnSave').on('click',function () {
+            if($('input').val()==''){
+                $('.tishi #tstext').text('请输入您的名称');
+                $('.tishi').show().delay(1000).fadeOut();
+                return;
             }
-        });
-    }
+            if(!$('ul li').hasClass('active')){
+                $('.tishi #tstext').text('请选择一份情书');
+                $('.tishi').show().delay(1000).fadeOut();
+                return;
+            }
+            if($('ul li').eq(0).hasClass('active')){
+                index = 1;
+            }
+            if($('ul li').eq(1).hasClass('active')){
+                index = 2;
+            }
+            if($('ul li').eq(2).hasClass('active')){
+                index = 3;
+            }
+            if($('ul li').eq(3).hasClass('active')){
+                index = 4;
+            }
+            window.location.href=(encodeURI("demo.html?name="+$('input').val()+"&imgindex="+ index+""));
+    })
+    })
 </script>
-
+</body>
 </html>
